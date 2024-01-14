@@ -1,25 +1,20 @@
-public class Solution {
-  public IList<IList<string>> GroupAnagrams(string[] strs) {
-      var dict = new Dictionary<string, IList<string>>();
-      var len = strs.Length;
+/**
+ * @param {string[]} strs
+ * @return {string[][]}
+ */
+var groupAnagrams = function (strs) {
+  let dict = {};
 
-      for(var i = 0 ; i < len; i++){
-          var sortedStr = SortString(strs[i]);
-          if(dict.ContainsKey(sortedStr)) dict[sortedStr].Add(strs[i]);
-          else{
-              dict[sortedStr] = new List<string>{strs[i]};
-          }
-      }
-
-      var result = new List<IList<string>>();
-      result.AddRange(dict.Values);
-
-      return result;
+  for (let i = 0; i < strs.length; i++) {
+    let key = strs[i].split("").sort().join("");
+    if (dict[key] === undefined) {
+      dict[key] = [];
+    }
+    dict[key].push(strs[i]);
   }
 
-  private string SortString(string input){
-      char[] characters = input.ToArray();
-      Array.Sort(characters);
-      return new string(characters);
-  }
-}
+  var result = [];
+  for (let key in dict) result.push(dict[key]);
+
+  return result;
+};
